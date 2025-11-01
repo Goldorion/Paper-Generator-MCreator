@@ -15,14 +15,12 @@ This project is not official. It is not affiliated with the respective owners an
 ## Information
 - Make sure you use MCreator 2025.3
 - Back up your workspace before updating to a newer version of the plugin.
-- Plugins also require [Spigot](https://getbukkit.org/download/spigot) to function properly.
+- Plugins also require [Paper](https://papermc.io/downloads/paper) to function properly.
 - 
 ## Credits/License
 Dev - [Goldorion](https://github.com/Goldorion)
-Contributors (previous Minecraft versions) - Klemen
 
-The plugin's MCreator page is [here](https://mcreator.net/plugin/64516/mcreator-spigot-generator).
-The plugin's MCreator forum page is [here](https://mcreator.net/forum/64143/spigot-generator-plugin).
+The plugin's MCreator page is [here](https://mcreator.net/plugin/120235/paper-generator).
 
 Licensed under the GNU Lesser General Public License, version 3.0
 - Plugins created with this tool may be closed source and/or be distributed with a different license.
