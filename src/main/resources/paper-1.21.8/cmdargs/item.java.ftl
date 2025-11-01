@@ -1,1 +1,1 @@
-.then(Commands.argument("${field$name}", ArgumentTypes.itemPredicate())${statement$args})
+.then(Commands.argument("${field$name}", ArgumentTypes.itemStack())${statement$args})
