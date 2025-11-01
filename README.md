@@ -9,7 +9,7 @@ This project is not official. It is not affiliated with the respective owners an
 **The current targeted Minecraft version is 1.21.8.**
 
 ## Features
-* Commands (Old system only)
+* Commands
 * Procedures (Partial support)
 
 ## Information

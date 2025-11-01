@@ -17,20 +17,20 @@
 <#-- @formatter:off -->
 package ${package}.procedures;
 
-import javax.annotation.Nullable;
-
 <#assign nullableDependencies = []/>
-<#list dependencies as dependency>
-	<#if dependency.getType(generator.getWorkspace()) != "double"
-		&& dependency.getType(generator.getWorkspace()) != "LevelAccessor"
-		&& dependency.getType(generator.getWorkspace()) != "ItemStack"
-		&& dependency.getType(generator.getWorkspace()) != "BlockState"
-		&& dependency.getType(generator.getWorkspace()) != "InteractionResult"
-		&& dependency.getType(generator.getWorkspace()) != "boolean"
-		&& dependency.getType(generator.getWorkspace()) != "CommandContext<CommandSourceStack>">
-		<#assign nullableDependencies += [dependency.getName()]/>
-	</#if>
-</#list>
+<#if !(data.skipDependencyNullCheck)>
+	<#list dependencies as dependency>
+		<#if dependency.getRawType() != "number"
+			&& dependency.getRawType() != "world"
+			&& dependency.getRawType() != "itemstack"
+			&& dependency.getRawType() != "blockstate"
+			&& dependency.getRawType() != "actionresulttype"
+			&& dependency.getRawType() != "logic"
+			&& dependency.getRawType() != "cmdcontext">
+			<#assign nullableDependencies += [dependency.getName()]/>
+		</#if>
+	</#list>
+</#if>
 
 <#compress>
 
@@ -40,26 +40,15 @@ ${trigger_code}
 public class ${name}Procedure implements Listener{
 </#if>
 
-	<#if trigger_code?has_content>
 	public static <#if return_type??>${return_type.getJavaType(generator.getWorkspace())}<#else>void</#if> execute(
 		<#list dependencies as dependency>
-			${dependency.getType(generator.getWorkspace())} ${dependency.getName()}<#if dependency?has_next>,</#if>
-		</#list>
-	) {
-		<#if return_type??>return </#if>execute(null<#if dependencies?has_content>,</#if><#list dependencies as dependency>${dependency.getName()}<#if dependency?has_next>,</#if></#list>);
-	}
-	</#if>
-
-	<#if trigger_code?has_content>private <#else>public </#if>static <#if return_type??>${return_type.getJavaType(generator.getWorkspace())}<#else>void</#if> execute(
-		<#if trigger_code?has_content>@Nullable Event event<#if dependencies?has_content>,</#if></#if>
-		<#list dependencies as dependency>
-				${dependency.getType(generator.getWorkspace())} ${dependency.getName()}<#if dependency?has_next>,</#if>
+				${dependency.getType(generator.getWorkspace())} ${dependency.getName()}<#sep>,
 		</#list>
 	) {
 		<#if nullableDependencies?has_content>
 			if(
 			<#list nullableDependencies as dependency>
-			${dependency} == null <#if dependency?has_next>||</#if>
+			${dependency} == null <#sep>||
 			</#list>
 			) return <#if return_type??>${return_type.getDefaultValue(generator.getWorkspace())}</#if>;
 		</#if>
@@ -71,7 +60,7 @@ public class ${name}Procedure implements Listener{
 		${procedurecode}
 	}
 
+	${extra_templates_code}
 }
-
 </#compress>
 <#-- @formatter:on -->

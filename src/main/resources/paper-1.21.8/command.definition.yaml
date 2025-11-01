@@ -5,3 +5,5 @@ templates:
 global_templates:
   - template: elementinits/commands.java.ftl
     name: "@SRCROOT/@BASEPACKAGEPATH/init/@JavaModNameCommands.java"
+
+field_exclusions: [type, permissionLevel]

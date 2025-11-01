@@ -1,10 +1,17 @@
 <#include "procedures.java.ftl">
-HashMap<String, String> cmdparams = new HashMap<>();
-int[] index = { -1 };
-Arrays.stream(args).forEach(param -> {
-	if(index[0] >= 0)
-		cmdparams.put(Integer.toString(index[0]), param);
-	index[0]++;
-});
+.executes(arguments -> {
+    World world = arguments.getSource().getLocation().getWorld();
 
-<@procedureToCode name=procedure dependencies=dependencies/>
+    double x = arguments.getSource().getLocation().x();
+    double y = arguments.getSource().getLocation().y();
+    double z = arguments.getSource().getLocation().z();
+
+    Entity entity = arguments.getSource().getExecutor();
+
+    BlockFace direction = BlockFace.DOWN;
+    if (entity != null)
+    	direction = entity.getFacing();
+
+    <@procedureToCode name=procedure dependencies=dependencies/>
+    return 0;
+})

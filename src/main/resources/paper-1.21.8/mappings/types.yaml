@@ -8,3 +8,4 @@ world: World
 entity: Entity
 map: HashMap
 direction: Direction
+cmdcontext: CommandContext<CommandSourceStack>

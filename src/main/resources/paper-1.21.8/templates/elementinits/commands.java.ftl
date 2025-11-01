@@ -20,9 +20,11 @@ package ${package}.init;
 public class ${JavaModName}Commands {
 
 	public static void register(JavaPlugin plugin) {
-	    <#list commands as command>
-			plugin.getCommand("${command.commandName}").setExecutor(new ${command.getModElement().getName()}());
-	    </#list>
+	    plugin.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands -> {
+            <#list commands as command>
+                commands.registrar().register(${command.getModElement().getName()}.register());
+            </#list>
+        });
 	}
 }
 <#-- @formatter:on -->
