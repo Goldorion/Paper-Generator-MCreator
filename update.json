@@ -1,8 +1,8 @@
 {
   "generator-paper-1.21.8": {
-    "latest": "1.0",
+    "latest": "1.1",
     "changes": [
-      "Initial release"
+      "Added command arguments support (Brigadier)"
     ]
   }
 }
