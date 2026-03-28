@@ -1,8 +1,8 @@
 {
   "generator-paper-1.21.8": {
-    "latest": "1.1",
+    "latest": "1.1.1",
     "changes": [
-      "Added command arguments support (Brigadier)"
+      "Updated to MCreator 2026.1 (2026.1.13616)"
     ]
   }
 }
