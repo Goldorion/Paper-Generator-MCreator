@@ -1,7 +1,8 @@
 {
   "id": "generator-paper-${version}",
   "supportedversions": [
-    2025003
+    2025003,
+    2026001
   ],
   "info": {
     "name": "Minecraft Paper ${version} Generator",
