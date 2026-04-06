@@ -13,6 +13,6 @@ public class ${name}Procedure implements Listener {
 				"event": "event"
 				}/>
 			</#compress></#assign>
-			execute(event<#if dependenciesCode?has_content>,</#if>${dependenciesCode});
+			execute(${dependenciesCode});
 		}
 	}
