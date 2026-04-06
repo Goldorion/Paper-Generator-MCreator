@@ -1,16 +1,13 @@
 {
-  "id": "generator-paper-${version}",
-  "supportedversions": [
-    2025003,
-    2026001
-  ],
+  "id": "generator-paper-${minecraftVersion}",
+  "supportedversions": [${supportedVersion}],
   "info": {
-    "name": "Minecraft Paper ${version} Generator",
+    "name": "Minecraft Paper ${minecraftVersion} Generator",
     "version": "${pluginVersion}",
     "description": "A Paper Generator",
     "author": "Goldorion",
     "credits": "Thank you to all contributors and supporters on Ko-fi",
-    "updateJSONURL": "https://raw.githubusercontent.com/Goldorion/Paper-Generator-MCreator/${version}/update.json",
+    "updateJSONURL": "https://raw.githubusercontent.com/Goldorion/Paper-Generator-MCreator/${minecraftVersion}/update.json",
     "pluginPageID": 120235
   }
 }
