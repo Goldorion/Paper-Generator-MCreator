@@ -1,5 +1,8 @@
 # Changelog
 
+# 1.2
+- Added support for custom enchantments (partial support)
+
 # 1.1.1
 - Updated to MCreator 2026.1 (2026.1.13616)
 

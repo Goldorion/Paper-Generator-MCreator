@@ -1,7 +1,7 @@
 name: Minecraft Paper for @minecraft-@buildfileversion
 status: stable
 buildfileversion: 60
-subversion: 2
+subversion: 3
 
 import:
   - datapack-1.21.8:
@@ -24,12 +24,16 @@ import_formatter:
     - org.bukkit
     - org.spigotmc
     - io.papermc
+    - net.kyori
 
 base_templates:
 - template: modbase/mod.java.ftl
   name: "@SRCROOT/@BASEPACKAGEPATH/@JavaModName.java"
   canLock: true
-- template: modbase/plugin.yml.ftl
+- template: modbase/bootstrap.java.ftl
+  name: "@SRCROOT/@BASEPACKAGEPATH/@JavaModNameBootstrap.java"
+  canLock: true
+- template: modbase/paper-plugin.yml.ftl
   writer: file
-  name: "@RESROOT/plugin.yml"
+  name: "@RESROOT/paper-plugin.yml"
   canLock: true

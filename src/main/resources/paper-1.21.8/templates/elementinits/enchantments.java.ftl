@@ -14,17 +14,43 @@
  # You should have received a copy of the GNU Lesser General Public License
  # along with Paper-Generator-MCreator.  If not, see <https://www.gnu.org/licenses/>.
 -->
+<#include "../mcitems.ftl">
 <#-- @formatter:off -->
 package ${package}.init;
 
-import org.bukkit.enchantments.Enchantment;
+import io.papermc.paper.plugin.bootstrap.BootstrapContext;
+import io.papermc.paper.plugin.bootstrap.PluginBootstrap;
+import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
 
+@SuppressWarnings("UnstableApiUsage")
 public class ${JavaModName}Enchantments {
 
-	public static void register() {
-	    <#list enchantments as enchantment>
-	        Enchantment.registerEnchantment(new ${enchantment.getModElement().getName()}Enchantment());
-	    </#list>
+	public static void register(LifecycleEventManager<BootstrapContext> lifecycle) {
+		lifecycle.registerEventHandler(RegistryEvents.ENCHANTMENT.compose().newHandler(event -> {
+			<#list enchantments as enchantment>
+			    <#assign supportedItems = enchantment.supportedItems>
+				event.registry().register(EnchantmentKeys.create(Key.key("${modid}:${enchantment.getModElement().getRegistryName()}")),
+						b -> b.description(Component.text("${enchantment.name}"))
+								.supportedItems(
+								    <#if supportedItems?size == 1 && supportedItems?first.getMappedValue().contains("TAG:")>
+								        event.getOrCreateTag(ItemTypeTagKeys.create(Key.key("${supportedItems?first.getMappedValue()?replace("TAG:", "")}")))
+								    <#else>
+								        RegistrySet.keySet(RegistryKey.ITEM,<#list supportedItems as item>typedItem(${mappedMCItemToItemType(item)})<#sep>,</#list>)
+								    </#if>
+								)
+								.anvilCost(${enchantment.anvilCost})
+								.maxLevel(${enchantment.maxLevel})
+								.weight(${enchantment.weight})
+								.minimumCost(EnchantmentRegistryEntry.EnchantmentCost.of(1, 10))
+								.maximumCost(EnchantmentRegistryEntry.EnchantmentCost.of(6, 10))
+								.activeSlots(${generator.map(enchantment.supportedSlots, "equipmentslots")})
+				);
+			</#list>
+		}));
 	}
+
+    private static TypedKey<ItemType> typedItem(ItemType item) {
+        return TypedKey.create(RegistryKey.ITEM, item.key());
+    }
 }
 <#-- @formatter:on -->

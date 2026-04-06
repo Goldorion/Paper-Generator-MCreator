@@ -10,6 +10,7 @@ This project is not official. It is not affiliated with the respective owners an
 
 ## Features
 * Commands
+* Enchantments (partial support)
 * Procedures (Partial support)
 
 ## Information

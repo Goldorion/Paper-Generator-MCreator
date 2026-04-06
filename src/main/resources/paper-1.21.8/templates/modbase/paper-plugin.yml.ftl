@@ -2,6 +2,7 @@ main: ${package}.${JavaModName}
 name: ${settings.getModName()?replace(" ", "")}
 version: ${settings.getVersion()}
 authors: [${settings.getAuthor()}]
+bootstrapper: ${package}.${JavaModName}Bootstrap
 <#if settings.getDescription()?has_content>
 description: ${settings.getDescription()}
 </#if>
