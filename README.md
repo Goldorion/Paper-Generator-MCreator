@@ -14,7 +14,7 @@ This project is not official. It is not affiliated with the respective owners an
 * Procedures (Partial support)
 
 ## Information
-- Make sure you use MCreator 2025.3
+- Make sure you use MCreator 2026.1
 - Back up your workspace before updating to a newer version of the plugin.
 - Plugins also require [Paper](https://papermc.io/downloads/paper) to function properly.
 - 
