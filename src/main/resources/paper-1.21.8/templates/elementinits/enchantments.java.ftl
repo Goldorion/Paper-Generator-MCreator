@@ -52,5 +52,10 @@ public class ${JavaModName}Enchantments {
     private static TypedKey<ItemType> typedItem(ItemType item) {
         return TypedKey.create(RegistryKey.ITEM, item.key());
     }
+
+	@NotNull
+	public static Enchantment getEnchantment(@NotNull String key) {
+		return RegistryAccess.registryAccess().getRegistry(RegistryKey.ENCHANTMENT).getOrThrow(new NamespacedKey("${modid}", key));
+	}
 }
 <#-- @formatter:on -->

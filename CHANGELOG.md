@@ -2,6 +2,7 @@
 
 # 1.2
 - Added support for custom enchantments (partial support)
+- Added support for has item enchantment procedure block
 - [Bugfix] Global triggers could not be used in most cases
 - [Bugfix] Fix many procedure block build errors
 
