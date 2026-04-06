@@ -3,6 +3,7 @@
 # 1.2
 - Added support for custom enchantments (partial support)
 - [Bugfix] Global triggers could not be used in most cases
+- [Bugfix] Fix many procedure block build errors
 
 # 1.1.1
 - Updated to MCreator 2026.1 (2026.1.13616)
