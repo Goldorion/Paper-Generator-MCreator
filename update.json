@@ -1,5 +1,5 @@
 {
-  "generator-paper-1.21.8": {
+  "generator-paper-26.1.2": {
     "latest": "1.2",
     "changes": [
       "Added support for custom enchantments (partial support)",

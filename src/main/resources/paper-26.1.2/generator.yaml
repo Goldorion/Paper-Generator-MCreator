@@ -1,10 +1,10 @@
 name: Minecraft Paper for @minecraft-@buildfileversion
 status: stable
-buildfileversion: 60
-subversion: 3
+buildfileversion: 74
+subversion: 4
 
 import:
-  - datapack-1.21.8:
+  - datapack-26.1.x:
     exclude:
       - features
       - jsontriggers

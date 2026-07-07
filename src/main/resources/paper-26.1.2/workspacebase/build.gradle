@@ -12,17 +12,17 @@ def paperJar = runDir.file("paper.jar")
 repositories {
 	mavenCentral()
 	maven {
-		name = "papermc-repo"
+		name = "papermc"
 		url = "https://repo.papermc.io/repository/maven-public/"
 	}
 }
 
 dependencies {
-	compileOnly("io.papermc.paper:paper-api:${generator.getGeneratorMinecraftVersion()}-R0.1-SNAPSHOT")
+	compileOnly("io.papermc.paper:paper-api:${generator.getGeneratorMinecraftVersion()}.build.+")
 }
 
 
-def javaVersion = JavaVersion.VERSION_21
+def javaVersion = JavaVersion.VERSION_25
 
 java {
 	sourceCompatibility = javaVersion
@@ -48,7 +48,8 @@ tasks.register('downloadPaper') {
 
 	doLast {
 		if (!paperJar.asFile.exists()) {
-			new URL("https://fill-data.papermc.io/v1/objects/8de7c52c3b02403503d16fac58003f1efef7dd7a0256786843927fa92ee57f1e/paper-${generator.getGeneratorMinecraftVersion()}-${generator.getGeneratorBuildFileVersion()}.jar").withInputStream { i ->
+			// The very long string of random characters need to be changed for each version/build. This is the download link on https://papermc.io/downloads/paper
+			new URL("https://fill-data.papermc.io/v1/objects/1d70b1dab9cf4a6de615209a536f3a45a2186240253c428213ce2188ab95e5f7/paper-${generator.getGeneratorMinecraftVersion()}-${generator.getGeneratorBuildFileVersion()}.jar").withInputStream { i ->
 				paperJar.asFile.withOutputStream { it << i }
 			}
 		}
@@ -82,13 +83,13 @@ tasks.register('runPaperServer', Exec) {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 21
+	it.options.release = 25
 }
 
 java {
 	withSourcesJar()
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
+	sourceCompatibility = javaVersion
+	targetCompatibility = javaVersion
 }
 
 processResources {

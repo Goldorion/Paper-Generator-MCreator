@@ -6,7 +6,7 @@ An unofficial plugin for [MCreator](https://mcreator.net/), a code generator for
 
 This project is not official. It is not affiliated with the respective owners and maintainers of Paper, Spigot, Bukkit, Minecraft, or MCreator. Do not expect any official support from their communities.
 
-**The current targeted Minecraft version is 1.21.8.**
+**The current targeted Minecraft version is 26.1.2.**
 
 ## Features
 * Commands
@@ -14,7 +14,7 @@ This project is not official. It is not affiliated with the respective owners an
 * Procedures (Partial support)
 
 ## Information
-- Make sure you use MCreator 2026.1
+- Make sure you use MCreator 2026.2
 - Back up your workspace before updating to a newer version of the plugin.
 - Plugins also require [Paper](https://papermc.io/downloads/paper) to function properly.
 - 
