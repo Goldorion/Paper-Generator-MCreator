@@ -12,7 +12,7 @@ website: ${settings.getWebsiteURL()}
 api-version: 26.1
 
 commands:
-  <#list w.getElementsOfType("command") as command>
+  <#list commands as command>
   ${command.getGeneratableElement().commandName}:
     permission: ${command.getGeneratableElement().commandName}.use
   </#list>

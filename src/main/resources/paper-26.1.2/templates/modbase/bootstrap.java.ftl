@@ -42,7 +42,7 @@ public class ${JavaModName}Bootstrap implements PluginBootstrap {
 	public void bootstrap(BootstrapContext context) {
 		LifecycleEventManager<BootstrapContext> lifecycle = context.getLifecycleManager();
 
-		<#if w.hasElementsOfType("enchantment")>${JavaModName}Enchantments.register(lifecycle);</#if>
+		<#if types.enchantments?has_content>${JavaModName}Enchantments.register(lifecycle);</#if>
 	}
 }
 <#-- @formatter:on -->

@@ -2,20 +2,35 @@ import java.nio.file.Files
 
 plugins {
     id "java"
+    id "idea"
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 
+// MCreator's build script configures idea.project, which only exists on the root project. As MCreator is included
+// here as a subproject, share this root project's IDEA project model with it so its configuration does not fail
+if(mcreator_path != "unassigned") {
+    project(':MCreator').plugins.withType(IdeaPlugin).configureEach { ideaPlugin ->
+        ideaPlugin.model.project = rootProject.idea.project
+    }
+}
+
 tasks.named('processResources') {
     filesMatching('plugin.json') {
         expand(
-                minecraftVersion: minecraftVersion,
+                mcVersion: mcVersion,
+                minecraftVersion: mcVersion,
                 mcreatorVersion: mcreatorVersion,
                 pluginVersion: pluginVersion,
                 supportedVersion: {
                     def p = mcreatorVersion.split("\\.")
-                    p[0] + p[1].padLeft(3, '0')
-                }() // Example: Input = 2026.1 -> Output: 2026001
+                    def majorlong = p[0] + p[1].padLeft(3, '0')
+
+                    if (p.length == 2)
+                        return majorlong
+
+                    return majorlong + p[2]
+                }() // Example: 2026.2 → 2026002, 2026.2.33218 → 202600233218
         )
     }
 }
@@ -28,7 +43,7 @@ class Globals {
     private static final def ARCHIVE_NAME = "generator-paper-26.1.2" // The name of the exported file
 
     // You can change the root folder of your OS if you have a custom installation
-    public static final def MCREATOR_ROOT_FOLDER_WINDOWS = "C:/Program Files/Pylo/MCreator" // Default path on Windows
+    public static final def MCREATOR_ROOT_FOLDER_WINDOWS = "C:/Program Files/Pylo/MCreatorEAP2026344621" // Default path on Windows
     public static def MCREATOR_ROOT_FOLDER_MAC_LINUX = "/Applications/MCreator.app/Contents/MacOS/mcreator" // Default path on macOS and Linux
 
     static def getArchiveName() {
@@ -73,34 +88,10 @@ tasks.register('install') {
     }
 }
 
-tasks.register('runMCreator') {
-    dependsOn install
-    group("mcreator_plugins")
-    doLast {
-        println("Launching MCreator...")
-        if (Globals.getOSName().contains('windows')) {
-            try {
-                tasks.named('runMCreatorFromCMD').get().exec()
-            } catch (IOException e) {
-                //noinspection GroovyAssignabilityCheck
-                throw new RuntimeException("Could not launch MCreator! Please make sure you have installed it to " + Globals.MCREATOR_ROOT_FOLDER_WINDOWS, e)
-            }
-        } else if (Globals.getOSName().contains('mac') || Globals.getOSName().contains('OS X') || Globals.getOSName().contains('linux')) {
-            try {
-                ProcessBuilder builder = new ProcessBuilder(Globals.MCREATOR_ROOT_FOLDER_MAC_LINUX)
-                builder.redirectOutput(ProcessBuilder.Redirect.INHERIT)
-                builder.redirectError(ProcessBuilder.Redirect.INHERIT)
-                builder.start()
-            } catch (IOException e) {
-                //noinspection GroovyAssignabilityCheck
-                throw new RuntimeException("Could not launch MCreator! Please make sure you have installed it to " + Globals.MCREATOR_ROOT_FOLDER_MAC_LINUX, e)
-            }
-        }
-    }
-}
-
 //For Gradle 9
 tasks.register('runMCreatorFromCMD', Exec) {
+    dependsOn install
+    group("mcreator_plugins")
     workingDir Globals.MCREATOR_ROOT_FOLDER_WINDOWS
     commandLine 'cmd', '/c', 'mcreator.exe'
     standardOutput = System.out
@@ -125,19 +116,20 @@ static def installPlugin(String path, String separator) {
 }
 
 subprojects { subproject ->
-    subproject.plugins.withType(JavaPlugin) {
-        test {
-            useJUnitPlatform()
-            include '**/GeneratorsTest.class'
+    subproject.plugins.withType(JavaPlugin).tap {
+        configureEach {
+            test {
+                useJUnitPlatform()
+                include '**/GeneratorsTest.class'
 
-            dependsOn rootProject.processResources
-            dependsOn rootProject.jar
+                dependsOn rootProject.processResources
+                dependsOn rootProject.jar
 
-            environment("MCREATOR_PLUGINS_FOLDER", new File(rootProject.projectDir, "/build/libs"))
-            environment("MCREATOR_PLUGINS_DEV", "")
-            environment("MCREATOR_TEST_GENERATORS", "paper-${minecraftVersion}")
+                environment("MCREATOR_PLUGINS_FOLDER", new File(rootProject.projectDir, "/build/libs"))
+                environment("MCREATOR_TEST_GENERATORS", "paper-${mcVersion}")
 
-            workingDir = mcreator_path
+                workingDir = mcreator_path
+            }
         }
     }
 }

@@ -26,8 +26,8 @@ public class ${JavaModName} extends JavaPlugin {
 	    plugin = this;
 		server = this.getServer();
 
-		<#if w.hasElementsOfType("command")>${JavaModName}Commands.register(this);</#if>
-		<#if w.hasElementsOfType("procedure")>${JavaModName}Procedures.register(this);</#if>
+		<#if types.commands?has_content>${JavaModName}Commands.register(this);</#if>
+		<#if types.procedures?has_content>${JavaModName}Procedures.register(this);</#if>
 	}
 
 	@Override
