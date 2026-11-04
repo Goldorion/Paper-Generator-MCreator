@@ -23,7 +23,7 @@ public class ${name} {
 
 	public static LiteralCommandNode<CommandSourceStack> register() {
 		return Commands.literal("${data.commandName}")
-			<#if data.permissionLevel != "No requirement">.requires(s -> s.hasPermission("${data.commandName}.use"))</#if>
+			<#if data.permissionLevel != "No requirement">.requires(s -> s.getSender().hasPermission("${data.commandName}.use"))</#if>
 			${argscode}
 		.build();
 	}

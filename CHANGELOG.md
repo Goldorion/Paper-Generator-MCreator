@@ -1,5 +1,8 @@
 # Changelog
 
+## Next release
+- [Bugfix] Custom commands using a permission level caused a build error
+
 ## 1.3
 - Updated to MCreator 2026.2
 - Updated to Paper 26.1.2
